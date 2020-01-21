@@ -207,12 +207,26 @@ function tick(){
 
 setInterval(tick,1000);
 */
-
+/*function FormattedDate(props) {
+    return (
+        <div>
+            <h2>It is {props.date.toLocaleTimeString()}.</h2>
+            <h2>My name is {props.name}.</h2>
+        </div>
+    )
+}
 //생명주기 메서드를 클래스에 추가하기
-/*class Clock extends React.Component{
+class Clock extends React.Component{
     constructor(props){
         super(props);
-        this.state={date:new Date()};
+        this.state={
+            date:new Date(),
+            name:"수영",
+            index:0,
+            cities:["daegu","seoul","busan","jeonju","incheon"]
+        };
+        this.handleClick=this.handleClick.bind(this);
+
     }
     //생명주기 메서드 tick() 메서드 호출을 위한 타이머 설정
     componentDidMount(){
@@ -220,6 +234,7 @@ setInterval(tick,1000);
             ()=>this.tick(),
             1000
         );
+        
     }
     componentWillUnmount(){
         clearInterval(this.timerID);
@@ -229,28 +244,48 @@ setInterval(tick,1000);
         this.setState({
             date:new Date()
         });
+    
+    }
+    handleClick(){
+        var newIndex=this.state.index+1;
+        if(newIndex==5){
+            newIndex=0;
+        }        
+        this.setState({
+            index: newIndex
+        });
     }
     //화면에 표시 되야 할 내용을 알게 함
-    render(){
+    render() {
         return (
-            <div>
-                <h1>Hello, world!</h1>
-                <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
+            <div onClick={this.handleClick} >
+                <h1>Hello, {this.state.name}!</h1>
+
+                <h2>다음 도시는 {this.state.cities[this.state.index]}</h2>
+               
+                { <h2>It is {this.state.date.toLocaleTimeString()}.</h2> }
+                { <FormattedDate date={this.state.date} name={this.state.name} /> }
             </div>
         );
     }
 }
-
+function App() {
+    return (
+      <div>
+        <Clock />
+      </div>
+    );
+  }
 ReactDOM.render(
-    <Clock />,
+    <App  />,
     document.getElementById('root')
 );
-serviceWorker.unregister();
+//serviceWorker.unregister();
 */
 
 //6. 이벤트 처리하기
-/*
-function ActionLink() {
+
+/*function ActionLink() {
     function handleClick(e) {
       e.preventDefault();
       console.log('The link was clicked.');
@@ -266,8 +301,8 @@ function ActionLink() {
   ReactDOM.render(
     <ActionLink />,
     document.getElementById('root')
-);
-*/
+);*/
+
 
 /*class Toggle extends React.Component {
     constructor(props) {
@@ -295,8 +330,8 @@ function ActionLink() {
   ReactDOM.render(
     <Toggle />,
     document.getElementById('root')
-  );
-*/
+  );*/
+
 
 //onClick={this.handleClick} () 사용없이 메서드 참조할때, 해당 메서드를 바인딩 해야함
 //방법1. 바인드하기
@@ -318,8 +353,8 @@ function ActionLink() {
   ReactDOM.render(
     <LoggingButton />,
     document.getElementById('root')
-  );*/
-
+  );
+*/
 //만약 bind 호출이 불편하다면 
 //방법2. 클래스 필드를 사용
 /*class LoggingButton extends React.Component {
@@ -343,16 +378,17 @@ function ActionLink() {
   );*/
   //방법3.콜백에 화살표 함수를 이용
   /*class LoggingButton extends React.Component {
-    handleClick() {
-      console.log('this is:', this);
-    }
+    handleClick = (txt) => {
+        console.log('this is:', this);
+        console.log('this is:', txt);
+      }
   
     render() {
       // 이 문법은 `this`가 handleClick 내에서 바인딩되도록 합니다.
       return (
-        <button onClick={(e) => this.handleClick(e)}>
-          Click me
-        </button>
+        <button onClick={this.handleClick.bind(this,"테스트")}>
+        Click me
+      </button>
       );
     }
   }
@@ -360,5 +396,244 @@ function ActionLink() {
     <LoggingButton />,
     document.getElementById('root')
   );*/
-
+//7. 조건부 렌더링
+  /*function UserGreeting(props) {
+    return <h1>Welcome back!</h1>;
+  }
   
+  function GuestGreeting(props) {
+    return <h1>Please sign up.</h1>;
+  }
+  function Greeting(props) {
+    const isLoggedIn = props.isLoggedIn;
+    if (isLoggedIn) {
+      return <UserGreeting />;
+    }
+    return <GuestGreeting />;
+  }
+  
+//컴포넌트의 일부만 조건부 렌더링
+function LoginButton(props) {
+    return (
+      <button onClick={props.onClick}>
+        Login
+      </button>
+    );
+  }
+  
+  function LogoutButton(props) {
+    return (
+      <button onClick={props.onClick}>
+        Logout
+      </button>
+    );
+  }
+  class LoginControl extends React.Component {
+    constructor(props) {
+      super(props);
+      this.handleLoginClick = this.handleLoginClick.bind(this);
+      this.handleLogoutClick = this.handleLogoutClick.bind(this);
+      this.state = {isLoggedIn: false};
+    }
+  
+    handleLoginClick() {
+      this.setState({isLoggedIn: true});
+    }
+  
+    handleLogoutClick() {
+      this.setState({isLoggedIn: false});
+    }
+  
+    render() {
+      const isLoggedIn = this.state.isLoggedIn;
+      let button;
+  
+      if (isLoggedIn) {
+        button = <LogoutButton onClick={this.handleLogoutClick} />;
+      } else {
+        button = <LoginButton onClick={this.handleLoginClick} />;
+      }
+  
+      return (
+        <div>
+          <Greeting isLoggedIn={isLoggedIn} />
+          {button}
+        </div>
+      );
+    }
+  }
+  
+  ReactDOM.render(
+    <LoginControl />,
+    document.getElementById('root')
+  );*/
+  //if == && true&&expression >> true / false&&expression >> false
+  /*function Mailbox(props) {
+    const unreadMessages = props.unreadMessages;
+    return (
+      <div>
+        <h1>Hello!</h1>
+        {unreadMessages.length > 0 &&
+          <h2>
+            You have {unreadMessages.length} unread messages.
+          </h2>
+        }
+      </div>
+    );
+  }
+  
+  const messages = ['React', 'Re: React', 'Re:Re: React'];
+  ReactDOM.render(
+    <Mailbox unreadMessages={messages} />,
+    document.getElementById('root')
+  );*/
+
+  /*function ListItem(props) {
+    const value = props.value;
+    return (
+      // 틀렸습니다! 여기에는 key를 지정할 필요가 없습니다.
+      <li >
+        {value}
+      </li>
+    );
+  }
+  
+  function NumberList(props) {
+    const numbers = props.numbers;
+    const listItems = numbers.map((number) =>
+      // 틀렸습니다! 여기에 key를 지정해야 합니다.
+      <ListItem value={number} key={number.toString()}/>
+    );
+    return (
+      <ul>
+        {listItems}
+      </ul>
+    );
+  }
+  
+  const numbers = [1, 2, 3, 4, 5];
+  ReactDOM.render(
+    <NumberList numbers={numbers} />,
+    document.getElementById('root')
+  );*/
+
+
+
+  function BoilingVerdict(props) {
+    if (props.celsius >= 100) {
+      return <p>The water would boil.</p>;
+    }
+    return <p>The water would not boil.</p>;
+  }
+  const scaleNames = {
+    c: 'Celsius',
+    f: 'Fahrenheit'
+  };
+  function toCelsius(fahrenheit) {
+    return (fahrenheit - 32) * 5 / 9;
+  }
+  
+  function toFahrenheit(celsius) {
+    return (celsius * 9 / 5) + 32;
+  }
+  function tryConvert(temperature, convert) {
+    const input = parseFloat(temperature);
+    if (Number.isNaN(input)) {
+      return '';
+    }
+    const output = convert(input);
+    const rounded = Math.round(output * 1000) / 1000;
+    return rounded.toString();
+  }
+  class Calculator extends React.Component {
+    constructor(props) {
+      super(props);
+      this.handleCelsiusChange = this.handleCelsiusChange.bind(this);
+      this.handleFahrenheitChange = this.handleFahrenheitChange.bind(this);
+      this.state = {temperature: '', scale: 'c'};
+    }
+  
+    handleCelsiusChange(temperature) {
+      this.setState({scale: 'c', temperature});
+    }
+  
+    handleFahrenheitChange(temperature) {
+      this.setState({scale: 'f', temperature});
+    }
+  
+    render() {
+      const scale = this.state.scale;
+      const temperature = this.state.temperature;
+      const celsius = scale === 'f' ? tryConvert(temperature, toCelsius) : temperature;
+      const fahrenheit = scale === 'c' ? tryConvert(temperature, toFahrenheit) : temperature;
+  
+      return (
+        <div>
+          <TemperatureInput
+            scale="c"
+            temperature={celsius}
+            onTemperatureChange={this.handleCelsiusChange} />
+  
+          <TemperatureInput
+            scale="f"
+            temperature={fahrenheit}
+            onTemperatureChange={this.handleFahrenheitChange} />
+  
+          <BoilingVerdict
+            celsius={parseFloat(celsius)} />
+  
+        </div>
+      );
+    }
+  }
+  class TemperatureInput extends React.Component {
+    constructor(props) {
+      super(props);
+      this.handleChange = this.handleChange.bind(this);
+    }
+  
+    handleChange(e) {
+      this.props.onTemperatureChange(e.target.value);
+    }
+  
+    render() {
+      const temperature = this.props.temperature;
+      const scale = this.props.scale;
+      return (
+        <fieldset>
+          <legend>Enter temperature in {scaleNames[scale]}:</legend>
+          <input value={temperature}
+                 onChange={this.handleChange} />
+        </fieldset>
+      );
+    }
+  }
+  ReactDOM.render(
+    <Calculator />,
+    document.getElementById('root')
+  );
+
+/*
+  function FancyBorder(props) {
+    return (
+      <div className={'FancyBorder FancyBorder-' + props.color}>
+        {props.children}
+      </div>
+    );
+  }
+  function WelcomeDialog() {
+    return (
+      <FancyBorder color="blue">
+        <h1 className="Dialog-title">
+          Welcome
+        </h1>
+        <p className="Dialog-message">
+          Thank you for visiting our spacecraft!
+        </p>
+      </FancyBorder>
+    );
+  }
+  ReactDOM.render(
+    <WelcomeDialog />,
+    document.getElementById('root')
+  );*/
